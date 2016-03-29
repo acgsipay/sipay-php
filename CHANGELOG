@@ -1,0 +1,19 @@
+RC1.0 - Started: 24-03-2016 / Finished: 29-03-2016
+--------------------------------------------------
+    NEW:
+        - Function: autoload, para auto cargar las dependencias del proyecto.
+        - Helpers: sipay_path, para cargar rutas absolutas, relativas al directorio del proyecto.
+        - Helpers: utimestamp, para soportar microtime en formato en la función date.
+        - Class: Logger, gestor logs.
+        - Class: Request, gestor de peticiones HTTP.
+        - Class: Profile, gestor de perfiles de usuario e información.
+        - Class: Action, es la clase base para todas las acciones.
+        - Class: Actions\PaymentsAuth, para autenticar una petición de pago.
+        - Class: Actions\RedirectAuth, para generar una url redirect.
+        - Class: Actions\SessionAuth, para generar un token de sesión para FastPay
+
+    FIXES:
+    
+    BUGS:
+    
+    TODO:
