@@ -36,7 +36,7 @@ class RedirectAuth extends Action
         $this->log->info('sipay.actions.redirect_auth', 'api.request', 'I-00001', 'Send Request', $params);
 
         $this->request->json($params)->call();
-        echo '<pre>'.print_r($this->request, true).'</pre>';
+
         if($this->request->error == false) {
             $this->log->info('sipay.actions.redirect_auth', 'api.response', 'I-00001', 'Request OK', $this->request->json);
             return $this->request->get('redirects.url');
