@@ -2,6 +2,8 @@
 
 namespace Sipay;
 
+use ErrorException;
+
 class Profile
 {
     protected $params;
@@ -14,7 +16,17 @@ class Profile
 
     public function __construct($profile)
     {
-        $folder = realpath(__DIR__) . DIRECTORY_SEPARATOR . 'profiles' . DIRECTORY_SEPARATOR;
+
+        if(defined('SIPAY_SDK_PROFILE_PATH')) {
+            $folder = SIPAY_SDK_PROFILE_PATH;
+        }
+        else {
+            $folder = realpath(__DIR__) . DIRECTORY_SEPARATOR . 'profiles' . DIRECTORY_SEPARATOR;
+        }
+
+        if(!is_dir($folder)) {
+            throw new ErrorException("Profile Directory Not Found: [$folder]", 1);
+        }
 
         if(!is_file($folder . 'defaults.ini')) {
             throw new ErrorException("Config File Not Found", 1);
@@ -47,7 +59,7 @@ class Profile
         $this->cert = array_merge($defaults['cert'], $profile['cert']);
 
         $this->domain = $profile['environment'];
-        
+
         $this->log = new Logger(array_merge($defaults['log'], $profile['log']));
     }
 
@@ -71,9 +83,9 @@ class Profile
     {
         $request = new Request($this->url($endpoint, $port), $this->log);
 
-        $request->setVerify(sipay_path($this->cert['path'], $this->cert['ca']));
-        $request->setCert(sipay_path($this->cert['path'], $this->cert['public']));
-        $request->setKey(sipay_path($this->cert['path'], $this->cert['private']));
+        $request->setVerify(sipay_sdk_profile_path($this->cert['path'], $this->cert['ca']));
+        $request->setCert(sipay_sdk_profile_path($this->cert['path'], $this->cert['public']));
+        $request->setKey(sipay_sdk_profile_path($this->cert['path'], $this->cert['private']));
 
         $request->offVeriryPeer()->offVerifyHost();
 

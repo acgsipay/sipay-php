@@ -4,7 +4,7 @@ namespace Sipay;
 
 use ErrorException;
 
-class Request
+class Request implements \Serializable
 {
     protected $handler;
     protected $log;
@@ -22,16 +22,59 @@ class Request
     protected $headers = array();
     protected $options = array();
 
-    public $body;
-    public $info;
+    public $body = array();
+    public $info = array();
     public $json = array();
 
-    public $error;
+    public $error = array();
 
     public function __construct($url, Logger $log)
     {
         $this->log = $log;
         $this->setOption(\CURLOPT_URL, $url);
+    }
+
+    public function serialize()
+    {
+        $minify = function($option) {
+            return array($option['flag'], $option['value']);
+        };
+
+        $data = array(
+            'd' => array_map($minify, $this->defaults),
+            'h' => $this->headers,
+            'o' => array_map($minify, $this->options),
+            'b' => $this->body,
+            'i' => $this->info,
+            'e' => $this->error
+        );
+
+        return serialize($data);
+    }
+
+    public function unserialize($string)
+    {
+        $data = unserialize($string);
+
+        $maxify = function($option) {
+            return array('flag' => $option[0], 'value' => $option[1]);
+        };
+
+        $this->defaults = array_map($maxify, $data['d']);
+        $this->headers  = $data['h'];
+        $this->options  = array_map($maxify, $data['o']);
+        $this->body     = $data['b'];
+        $this->info     = $data['i'];
+        $this->error    = $data['e'];
+
+        if($this->is_json($this->info)) {
+            $this->json = json_decode($this->body, true);
+        }
+    }
+
+    public function is_json($info)
+    {
+        return array_key_exists('content_type', $info) && strpos($info['content_type'], 'application/json') >= 0;
     }
 
     public function call()
@@ -53,12 +96,25 @@ class Request
         # TODO control de errores
         if(curl_errno($this->handler)) {
             $this->error = array('code' => curl_errno($this->handler), 'description' => curl_error($this->handler));
+            $this->log->error('sipay.request', 'curl.response', 'E0001', 'Curl Error', $this->error);
         }
+
         else if(empty($this->body)) {
-            
+            $this->error = array('code' => 'CERR0001', 'description' => 'Body empty');
+            $this->log->error('sipay.request', 'curl.response', 'E0002', 'Body empty', $this->info);
         }
-        else if($this->info['content_type'] == 'application/json') {
-            $this->json = json_decode($this->body, true);
+
+        else if($this->info['http_code'] != '200') {
+            $this->error = array('code' => 'CERR0002', 'description' => "Response not successful. [C:{$this->info['http_code']}]");
+            $this->log->error('sipay.request', 'curl.response', 'E0003', 'Response not successful', $this->info);
+        }
+
+        else if($this->is_json($this->info)) {
+            $this->json = @json_decode($this->body, true);
+            if(is_null($this->json) || json_last_error() !== JSON_ERROR_NONE) {
+                $this->error = array('code' => json_last_error(), 'description' => json_last_error_msg());
+                $this->log->error('sipay.request', 'json.decode', 'E0003', 'Curl Error', $this->error);
+            }
         }
 
         curl_close($this->handler);
@@ -136,7 +192,7 @@ class Request
     {
         #TODO: corregir error
         if(!is_file($file)) {
-            throw new ErrorException("File not exist", 1);
+            throw new ErrorException("File not exist: [$file]", 1);
         }
 
         $this->setOption(\CURLOPT_CAINFO, $file);
@@ -148,7 +204,7 @@ class Request
     {
         #TODO: corregir error
         if(!is_file($file)) {
-            throw new ErrorException("File not exist", 1);
+            throw new ErrorException("File not exist: [$file]", 1);
         }
 
         $this->setOption(\CURLOPT_SSLCERTTYPE, $type);
@@ -161,7 +217,7 @@ class Request
     {
         #TODO: corregir error
         if(!is_file($file)) {
-            throw new ErrorException("File not exist", 1);
+            throw new ErrorException("File not exist: [$file]", 1);
         }
 
         $this->setOption(\CURLOPT_SSLKEYTYPE, $type);
@@ -171,7 +227,7 @@ class Request
     }
 
     public function onVerifyPeer()
-    {  
+    {
         $this->setOption(\CURLOPT_SSL_VERIFYPEER, 1);
 
         return $this;
