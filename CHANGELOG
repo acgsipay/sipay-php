@@ -1,3 +1,43 @@
+RC2.0 - Started: 23-05-2016 / Finished: 23-05-2016
+--------------------------------------------------
+    NEW:
+        - Cambiado namespace para Actions segun motor
+
+        - Class: Actions\Redirect\PaymentsCardsAuth, para autenticar petición de pago con tarjeta, soporta tokenización
+        - Class: Actions\Redirect\PaymentsMethodsAuth, para autenticar petición de pago con selección de metodo de pago, soporta tokenización
+        - Class: Actions\Redirect\RefundsAuth, para autenticar petición de devolución.
+        - Class: Actions\Redirect\RefundsById, para devolución.
+
+        - Class: Actions\Api\PaymentsAuth, para autorización de venta.
+        - Class: Actions\Api\Payments, para venta.
+        - Class: Actions\Api\RefundsAuth, para autorización de devolución.
+        - Class: Actions\Api\Refunds, para devolución.
+        - Class: Actions\Api\CancelationsAuth, para autorización de cancelación de venta/preautorización o devolución.
+        - Class: Actions\Api\Cancelations, para cancelación de venta/preautorización o devolución.
+        - Class: Actions\Api\TokenizationsPaymentsAuth, para autorización de venta con tarjeta tokenizada.
+        - Class: Actions\Api\TokenizationsPayments, para venta con tarjeta tokenizada.
+
+        - Class: Actions\Fastpay\SessionAuth, para solicitar sesión para petición Fastpay.
+
+        - Class: Logger, cambios en la gestión de rutas, soporte para parametros anidados.
+        - Class: Request, registro de trazas, control de errores, soporte serialización, cambios menores.
+        - Class: Profile, cambios en la gestión de rutas.
+
+        - Helpers: sipay_sdk_root_path, para cargar rutas absolutas, relativas al directorio del proyecto.
+        - Helpers: sipay_sdk_profile_path, para cargar rutas absolutas, relativas al directorio de perfiles.
+        - Helpers: json_last_error_msg, gestión de errores para el interprete de json.
+
+        - Example: redirect/payments.php, ejemplo de venta con tarjeta.
+        - Example: redirect/payments_tokenization.php, ejemplo de venta con tarjeta y tokenización.
+        - Example: redirect/refunds.php, ejemplo de devolución.
+        - Example: api/tokenizations_payments.php, ejemplo de pago con tarjeta tokenizada.
+
+    FIXES:
+
+    BUGS:
+
+    TODO:
+
 RC1.0 - Started: 24-03-2016 / Finished: 29-03-2016
 --------------------------------------------------
     NEW:
@@ -13,7 +53,7 @@ RC1.0 - Started: 24-03-2016 / Finished: 29-03-2016
         - Class: Actions\SessionAuth, para generar un token de sesión para FastPay
 
     FIXES:
-    
+
     BUGS:
-    
+
     TODO:

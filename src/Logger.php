@@ -44,9 +44,9 @@ class Logger
 
     public function __construct($options)
     {
-        $this->uuid = md5(microtime(true)); 
+        $this->uuid = md5(microtime(true));
 
-        $options['path'] = sipay_path($options['path']);
+        $options['path'] = sipay_sdk_root_path($options['path']);
 
         $this->setup($options);
     }
@@ -113,6 +113,10 @@ class Logger
         $string = '';
 
         foreach($params as $key => $value) {
+            if(is_array($value)) {
+                $value = "{".$this->encode($value)."}";
+            }
+
             $string .= "$key=$value; ";
         }
 
@@ -139,29 +143,29 @@ class Logger
     {
         if($this->register(self::DEBUG)) {
             $this->log(self::DEBUG, $origin, $type, $code, $detail, $params);
-        }   
+        }
     }
 
     public function info($origin, $type, $code, $detail, array $params = array())
     {
         if($this->register(self::INFO)) {
             $this->log(self::INFO, $origin, $type, $code, $detail, $params);
-        }   
+        }
     }
 
     public function warning($origin, $type, $code, $detail, array $params = array())
     {
         if($this->register(self::WARNING)) {
             $this->log(self::WARNING, $origin, $type, $code, $detail, $params);
-        }   
+        }
     }
 
     public function error($origin, $type, $code, $detail, array $params = array())
     {
         if($this->register(self::ERROR)) {
             $this->log(self::ERROR, $origin, $type, $code, $detail, $params);
-        }   
-    }   
+        }
+    }
 
     public function register($level)
     {
