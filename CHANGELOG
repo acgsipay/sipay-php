@@ -1,4 +1,15 @@
-RC2.0 - Started: 23-05-2016 / Finished: XX-XX-XXXX
+RC2.1 - Started: 24-05-2016 / Finished: 24-05-2016
+--------------------------------------------------
+    NEW:
+
+    FIXES:
+
+    BUGS:
+        - Corrección ejemplo api/tokenizations_payments.php, añadido $cardindex, eliminado $notemail y $notemailformat
+
+    TODO:
+
+RC2.0 - Started: 23-05-2016 / Finished: 23-05-2016
 --------------------------------------------------
     NEW:
         - Cambiado namespace para Actions segun motor
