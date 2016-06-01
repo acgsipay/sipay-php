@@ -16,7 +16,6 @@ class Profile
 
     public function __construct($profile)
     {
-
         if(defined('SIPAY_SDK_PROFILE_PATH')) {
             $folder = SIPAY_SDK_PROFILE_PATH;
         }
@@ -56,7 +55,10 @@ class Profile
         }
 
         $this->params = array_merge($defaults['params'], $profile['params']);
-        $this->cert = array_merge($defaults['cert'], $profile['cert']);
+
+        $optionals = array('password' => NULL);
+
+        $this->cert = array_merge($optionals, $defaults['cert'], $profile['cert']);
 
         $this->domain = $profile['environment'];
 
@@ -85,9 +87,9 @@ class Profile
 
         $request->setVerify(sipay_sdk_profile_path($this->cert['path'], $this->cert['ca']));
         $request->setCert(sipay_sdk_profile_path($this->cert['path'], $this->cert['public']));
-        $request->setKey(sipay_sdk_profile_path($this->cert['path'], $this->cert['private']));
+        $request->setKey(sipay_sdk_profile_path($this->cert['path'], $this->cert['private']), 'PEM', $this->cert['password']);
 
-        $request->offVeriryPeer()->offVerifyHost();
+        $request->offVerifyPeer()->offVerifyHost();
 
         return $request;
     }
