@@ -13,7 +13,8 @@ class PaymentsAuth extends Action
     {
         $default = array(
             'api.notpage'   => '',
-            'api.notmode'   => ''
+            'api.notmode'   => '',
+            'api.dstpage'   => ''
         );
 
         $input = array(

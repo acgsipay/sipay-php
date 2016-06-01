@@ -16,7 +16,7 @@ class Request implements \Serializable
         array('flag' => \CURLOPT_RETURNTRANSFER, 'value' => 1),
         array('flag' => \CURLOPT_HEADER, 'value' => 0),
         array('flag' => \CURLINFO_HEADER_OUT, 'value' => 0),
-        array('flag' => \CURLOPT_USERAGENT, 'value' => 'Sipay PHP SDK RC1.0')
+        array('flag' => \CURLOPT_USERAGENT, 'value' => 'Sipay PHP SDK RC2.2')
     );
 
     protected $headers = array();
@@ -213,7 +213,7 @@ class Request implements \Serializable
         return $this;
     }
 
-    public function setKey($file, $type = 'PEM')
+    public function setKey($file, $type = 'PEM', $password = NULL)
     {
         #TODO: corregir error
         if(!is_file($file)) {
@@ -222,6 +222,10 @@ class Request implements \Serializable
 
         $this->setOption(\CURLOPT_SSLKEYTYPE, $type);
         $this->setOption(\CURLOPT_SSLKEY, $file);
+
+        if($password) {
+            $this->setOption(\CURLOPT_SSLCERTPASSWD, $password);
+        }
 
         return $this;
     }
@@ -233,7 +237,7 @@ class Request implements \Serializable
         return $this;
     }
 
-    public function offVeriryPeer()
+    public function offVerifyPeer()
     {
         $this->setOption(\CURLOPT_SSL_VERIFYPEER, 0);
 
