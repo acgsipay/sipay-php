@@ -132,11 +132,24 @@ class Logger
 
         $default = array();
 
-        $params = trim($this->encode(array_merge($default, $params)));
+        $params = trim($this->encode(array_merge($default, $this->camouflage($params))));
 
         $string = "$date - $origin - $level - uuid=$uuid; type=$type; code=$code; detail=$detail; $params".PHP_EOL;
 
         return $this->write($string);
+    }
+
+    protected function camouflage(array $params)
+    {
+        if(isset($params['pan'])) {
+            $params['pan'] = substr($params['pan'], 0, 4).' '.substr($params['pan'], 4, 2).'** **** '.substr($params['pan'], 12);
+        }
+
+        if(isset($params['cvv'])) {
+            unset($params['cvv']);
+        }
+
+        return $params;
     }
 
     public function debug($origin, $type, $code, $detail, array $params = array())

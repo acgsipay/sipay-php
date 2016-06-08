@@ -4,10 +4,14 @@
 # -------------------------------------------------
     $amount         = '0000000010';
     $ticket         = 'sipay-php-sdk-1234';
-
     $transactionid  = ''; # Mandatory
 
-    $reference      = '1234sdkphp'; # Optional
+# -------------------------------------------------
+#   NOTIFICATION
+# -------------------------------------------------
+    $notpage        = '';
+    $notmode        = 'async'; # [async|sync]
+
 
 # -------------------------------------------------
 #   PROFILE
@@ -24,27 +28,25 @@
 # -------------------------------------------------
 #   AUTH
 # -------------------------------------------------
-    $auth = new Sipay\Actions\Redirect\RefundsAuth($profile);
+    $auth = new Sipay\Actions\Api\CancelationsAuth($profile);
 
-    $extra  = array();
+    $extra  = array(
+        'api.notpage'   => $notpage,
+        'api.notmode'   => $notmode
+    );
 
-    $idrefund = $auth->call($amount, $ticket, $extra);
+    $idcancelation = $auth->call($amount, $ticket, $extra);
 
 # -------------------------------------------------
 #   CALL
 # -------------------------------------------------
-    $action = new Sipay\Actions\Redirect\RefundsById($profile);
+    $action = new Sipay\Actions\Api\Cancelations($profile);
 
-    $extra = array(
-        'reference' => $reference
-    );
+    $response = $action->call($idcancelation, $transactionid);
 
-    $response = $action->call($idrefund, $amount, $ticket, $transactionid, $extra);
-
-    if($response['ResultCode'] == 0) {
+    if(isset($response['ResultCode']) && $response['ResultCode'] == 0) {
         echo 'Success!';
     }
-
     else {
         echo 'Not Success!';
 

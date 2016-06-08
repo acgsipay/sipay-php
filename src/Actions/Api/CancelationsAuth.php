@@ -9,7 +9,7 @@ class CancelationsAuth extends Action
     protected $endpoint = '/api/v1/auth';
     protected $port = 10010;
 
-    public function call(array $extra = array())
+    public function call($amount, $ticket, array $extra = array())
     {
         $default = array(
             'api.notpage'   => '',
@@ -17,6 +17,8 @@ class CancelationsAuth extends Action
         );
 
         $input = array(
+            'amount'    => $amount,
+            'ticket'    => $ticket,
             'resource'  => 'cancelations'
         );
 
