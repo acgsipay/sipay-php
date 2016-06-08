@@ -11,8 +11,7 @@ class Cancelations extends Action
 
     public function call($idcancelation, $transactionid, array $extra = array())
     {
-        $defaults = array(
-        );
+        $defaults = array();
 
         $input = array(
             'idcancelation' => $idcancelation,
