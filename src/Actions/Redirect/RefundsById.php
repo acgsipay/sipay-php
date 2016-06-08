@@ -9,17 +9,17 @@ class RefundsById extends Action
     protected $endpoint = '/api/v1/refundsbyid';
     protected $port = 443;
 
-    public function call($idrefund, $amount, $ticket, $idrequest, array $extra = array())
+    public function call($idrefund, $amount, $ticket, $transactionid, array $extra = array())
     {
         $defaults = array(
             'reference'     => ''
         );
 
         $input = array(
-            'idrefund'          => $idrefund,
+            'idrequest'         => $idrefund,
             'amount'            => $amount,
             'ticket'            => $ticket,
-            'originalidrequest' => $idrequest
+            'idoriginalrequest' => $transactionid
         );
 
         $params = array_merge($defaults, $extra, $input);
