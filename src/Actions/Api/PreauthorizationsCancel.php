@@ -29,16 +29,16 @@ class PreauthorizationsCancel extends Action
 
         $params = $this->params($keys, $params);
 
-        $this->log->info('sipay.actions.api.preauthorizations_confirm', 'api.request', 'I-00001', 'Send Request', $params);
+        $this->log->info('sipay.actions.api.preauthorizations_cancel', 'api.request', 'I-00001', 'Send Request', $params);
 
         $this->request->json($params, 'DELETE')->call();
 
         if($this->request->error == false) {
-            $this->log->info('sipay.actions.api.preauthorizations_confirm', 'api.response', 'I-00001', 'Request OK', $this->request->json);
+            $this->log->info('sipay.actions.api.preauthorizations_cancel', 'api.response', 'I-00001', 'Request OK', $this->request->json);
             return $this->request->json;
         }
 
-        $this->log->error('sipay.actions.api.preauthorizations_confirm', 'api.response', 'E-00001', 'Request KO', $this->request->error);
+        $this->log->error('sipay.actions.api.preauthorizations_cancel', 'api.response', 'E-00001', 'Request KO', $this->request->error);
         #TODO control errores
         return false;
     }
