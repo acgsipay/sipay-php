@@ -1,3 +1,28 @@
+RC2.4 - Started: 09-06-2016 / Finished: 14-06-2016
+--------------------------------------------------
+    NEW:
+        - Class: Request, implementado función para indicar la url y añadir cabeceras.
+        - Class: Request, almacenamiento de los parametros de entrada.
+        - Class: Request, soporte para peticiones con otros metodos (PUT, DELETE...).
+        - Class: Actions\Api\TokenizationsPaymentsAuth, añadido campo opcional, dstpage.
+        - Class: Actions\Api\PaymentsAuth, eliminado campo opcional, dstpage.
+
+        - Class: Actions\Api\PreauthorizationsAuth, para autenticar preautorizaciones.
+        - Class: Actions\Api\PreauthorizationsCapture, para crear preautorizaciones.
+        - Class: Actions\Api\PreauthorizationsConfirm, para confirmar preautorizaciones.
+        - Class: Actions\Api\PreauthorizationsReplace, para reemplazar preautorizaciones.
+        - Class: Actions\Api\PreauthorizationsCancel, para liberar preautorizaciones.
+
+        - Class: Actions\Redirect\PreauthorizationsCardsAuth, para solicitar url iframe/redirect para preautorizaciones.
+
+
+    FIXES:
+        - Cambios en logger para control de datos sensibles [CVV].
+
+    BUGS:
+
+    TODO:
+
 RC2.3 - Started: 08-06-2016 / Finished: 08-06-2016
 --------------------------------------------------
     NEW:

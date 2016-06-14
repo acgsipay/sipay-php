@@ -22,6 +22,8 @@ class Request implements \Serializable
     protected $headers = array();
     protected $options = array();
 
+    public $fields = array();
+
     public $body = array();
     public $info = array();
     public $json = array();
@@ -135,11 +137,25 @@ class Request implements \Serializable
         return $this;
     }
 
-    public function json(array $fields = array())
+    public function put(array $fields = array())
+    {
+        $this->setOption(\CURLOPT_CUSTOMREQUEST, 'PUT');
+        $this->setOption(\CURLOPT_POSTFIELDS, $fields);
+
+        return $this;
+    }
+
+    public function json(array $fields = array(), $method = 'POST')
     {
         $this->setHeader('Content-Type: application/json');
 
-        $this->setOption(\CURLOPT_POST, 1);
+        if ($method == 'POST') {
+            $this->setOption(\CURLOPT_POST, 1);
+        }
+        else {
+            $this->setOption(\CURLOPT_CUSTOMREQUEST, strtoupper($method));
+        }
+
         $this->setOption(\CURLOPT_POSTFIELDS, json_encode($fields));
 
         return $this;
@@ -147,6 +163,10 @@ class Request implements \Serializable
 
     public function setOption($option, $value)
     {
+        if ($option == \CURLOPT_POSTFIELDS) {
+            $this->fields = is_array($value) ? $value:json_decode($value, true);
+        }
+
         $this->options[] = array('flag' => $option, 'value' => $value);
 
         return $this;
@@ -174,6 +194,22 @@ class Request implements \Serializable
     public function getOptions()
     {
         return $this->options;
+    }
+
+    public function setUrl($url)
+    {
+        $this->setOption(\CURLOPT_URL, $url);
+
+        return $this;
+    }
+
+    public function addHeaders(array $header)
+    {
+        foreach ($headers as $header => $value) {
+            $this->headers[] = "$header: $value";
+        }
+
+        return $this;
     }
 
     public function setHeader($header)

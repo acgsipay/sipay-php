@@ -13,7 +13,8 @@ class TokenizationsPaymentsAuth extends Action
     {
         $defaults = array(
             'api.notpage'   => '',
-            'api.notmode'   => 'async'
+            'api.notmode'   => 'async',
+            'api.dstpage'   => ''
         );
 
         $input = array(
