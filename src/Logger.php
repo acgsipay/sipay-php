@@ -149,6 +149,10 @@ class Logger
             unset($params['cvv']);
         }
 
+        if(isset($params['cardindex'])) {
+            $params['cardindex'] = substr($params['cardindex'], 0, 2).'**'.substr($params['cardindex'], -2);
+        }
+
         return $params;
     }
 
