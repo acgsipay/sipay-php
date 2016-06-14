@@ -4,7 +4,7 @@ namespace Sipay\Actions\Api;
 
 use Sipay\Action;
 
-class PaymentsAuth extends Action
+class PreauthorizationsAuth extends Action
 {
     protected $endpoint = '/api/v1/auth';
     protected $port = 10010;
@@ -19,7 +19,7 @@ class PaymentsAuth extends Action
         $input = array(
             'amount'    => $amount,
             'ticket'    => $ticket,
-            'resource'  => 'payments'
+            'resource'  => 'preauthorizations'
         );
 
         $params = array_merge($default, $extra, $input);
@@ -27,16 +27,16 @@ class PaymentsAuth extends Action
 
         $params = $this->params($keys, $params);
 
-        $this->log->info('sipay.actions.api.payments_auth', 'api.request', 'I-00001', 'Send Request', $params);
+        $this->log->info('sipay.actions.api.preauthorizations_auth', 'api.request', 'I-00001', 'Send Request', $params);
 
         $this->request->json($params)->call();
 
         if($this->request->error == false) {
-            $this->log->info('sipay.actions.api.payments_auth', 'api.response', 'I-00001', 'Request OK', $this->request->json);
+            $this->log->info('sipay.actions.api.preauthorizations_auth', 'api.response', 'I-00001', 'Request OK', $this->request->json);
             return $this->request->get('idrequest');
         }
 
-        $this->log->error('sipay.actions.api.payments_auth', 'api.response', 'E-00001', 'Request KO', $this->request->error);
+        $this->log->error('sipay.actions.api.preauthorizations_auth', 'api.response', 'E-00001', 'Request KO', $this->request->error);
         #TODO control errores
         return false;
     }
