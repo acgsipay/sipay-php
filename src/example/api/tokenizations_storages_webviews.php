@@ -2,10 +2,13 @@
 # -------------------------------------------------
 #   PARAMS
 # -------------------------------------------------
-    $amount         = '0000000010';
-    $ticket         = 'sipay-php-sdk-1234';
+    $amount         = '0000000010'; # Mandatory
+    $ticket         = 'sipay-php-sdk-1234'; # Mandatory
+    $dstpage        = ''; # Mandatory
 
     $reference      = '1234sdkphp'; # Optional
+
+    $checkmode      = 'mode1';
 
 # -------------------------------------------------
 #   NOTIFICATION
@@ -16,7 +19,7 @@
 # -------------------------------------------------
 #   TOKENIZATION
 # -------------------------------------------------
-    $cardindex      = 'cardsdk';
+    $cardindex      = 'cardsdk'; # Mandatory
 
 # -------------------------------------------------
 #   PROFILE
@@ -33,37 +36,35 @@
 # -------------------------------------------------
 #   AUTH
 # -------------------------------------------------
-    $auth = new Sipay\Actions\Api\TokenizationsPaymentsAuth($profile);
+    $auth = new Sipay\Actions\Api\DirectPostAuth($profile);
 
     $extra  = array(
-        'api.dstpage'   => $dstpage, # CES
         'api.notpage'   => $notpage,
         'api.notmode'   => $notmode
     );
 
-    $idrequest = $auth->call($amount, $ticket, $extra);
+    $idrequest = $auth->call($amount, $ticket, $dstpage, $extra);
+
 
 # -------------------------------------------------
 #   CALL
 # -------------------------------------------------
-    $action = new Sipay\Actions\Api\TokenizationsPayments($profile);
+    $action = new Sipay\Actions\Api\TokenizationsStoragesWebviews($profile);
 
     $extra = array(
-        # 'reference' => $reference
+        'notpage'   => $notpage,
+        'notmode'   => $notmode
     );
 
-    $response = $action->call($idrequest, $cardindex, $amount, $ticket, $extra);
+    $response = $action->call($idrequest, $cardindex, $amount, $ticket, $dstpage, $checkmode, $extra);
 
-    if($response['ResultCode'] == 0) {
-        echo 'Success!';
-    }
-
-    else if ($response['ResultCode'] == '8') {
-        echo '<div><a href="'.$response['url'].'">URL</a></div>';
+    if(isset($response['webview.url'])) {
+        echo '<div><a href="'.$response['webview.url'].'">URL</a></div>';
     }
 
     else {
         echo 'Not Success!';
+
     }
 
     echo '<div><pre>'.print_r($response, true).'</pre></div>';

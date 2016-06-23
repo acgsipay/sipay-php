@@ -1,3 +1,43 @@
+RC2.5 - Started: 14-06-2016 / Finished: 23-06-2016
+--------------------------------------------------
+    NEW:
+        - Class: Actions\Api\TokenizationsPreauthorizationsAuth, para autenticar preautorizaciones con tarjeta tokenizada.
+        - Class: Actions\Api\TokenizationsPreauthorizations, para preautorizaciones con tarjeta tokenizada.
+
+        - Class: Actions\Api\TokenizationsRefundsAuth, para autenticar devoluciones con tarjeta tokenizada.
+        - Class: Actions\Api\TokenizationsRefunds, para devoluciones con tarjeta tokenizada.
+
+        - Class: Actions\Api\TokenizationsStoragesAuth, para autenticar gestion de tarjetas tokenizadas.
+        - Class: Actions\Api\TokenizationsStoragesAdd, para añadir tarjetas tokenizadas.
+        - Class: Actions\Api\TokenizationsStoragesUpdate, para actualizar tarjetas tokenizadas.
+        - Class: Actions\Api\TokenizationsStoragesDelete, para eliminar tarjetas tokenizadas.
+        - Class: Actions\Api\TokenizationsStoragesGet, para consultar tarjetas tokenizadas.
+
+        - Class: Actions\Api\TokenizationsStoragesWebviews, para obtener webview para tokenizar tarjetas.
+
+        - Example: api/preauthorizations_confirm.php, ejemplo de confirmación de peautorización.
+        - Example: api/tokenizations_preauthorizations.php, ejemplo de peautorización con tarjeta tokenizada.
+        - Example: api/tokenizations_storages_webviews.php, ejemplo de obtención de webview para tokenizar tarjetas.
+
+
+    FIXES:
+        - Class: Request, cambio en el nombre de parámetro de entrada.
+        - Class: Profile, cambio en el ámbito del método url.
+        - Añadido campo obligatorio merchantname en:
+            - Actions\Api\CancelationsAuth
+            - Actions\Api\PaymentsAuth
+            - Actions\Api\PreauthorizationsAuth
+            - Actions\Api\RefundsAuth
+            - Actions\Api\TokenizationsPaymentsAuth
+            - Actions\Redirect\PaymentsCardsAuth
+            - Actions\Redirect\PaymentsMethodsAuth
+            - Actions\Redirect\PreauthorizationsCardsAuth
+            - Actions\Redirect\RefundsAuth
+
+    BUGS:
+
+    TODO:
+
 RC2.4 - Started: 09-06-2016 / Finished: 14-06-2016
 --------------------------------------------------
     NEW:
