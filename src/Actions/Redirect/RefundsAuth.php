@@ -11,8 +11,7 @@ class RefundsAuth extends Action
 
     public function call($amount, $ticket, array $extra = array())
     {
-        $default = array(
-        );
+        $default = array();
 
         $input = array(
             'amount'    => $amount,
