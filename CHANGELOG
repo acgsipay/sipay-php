@@ -23,6 +23,16 @@ RC2.5 - Started: 14-06-2016 / Finished: 23-06-2016
     FIXES:
         - Class: Request, cambio en el nombre de parámetro de entrada.
         - Class: Profile, cambio en el ámbito del método url.
+        - Añadido campo obligatorio merchantname en:
+            - Actions\Api\CancelationsAuth
+            - Actions\Api\PaymentsAuth
+            - Actions\Api\PreauthorizationsAuth
+            - Actions\Api\RefundsAuth
+            - Actions\Api\TokenizationsPaymentsAuth
+            - Actions\Redirect\PaymentsCardsAuth
+            - Actions\Redirect\PaymentsMethodsAuth
+            - Actions\Redirect\PreauthorizationsCardsAuth
+            - Actions\Redirect\RefundsAuth
 
     BUGS:
 
