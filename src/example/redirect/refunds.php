@@ -42,10 +42,12 @@
     $response = $action->call($idrefund, $amount, $ticket, $transactionid, $extra);
 
     if($response['ResultCode'] == 0) {
+        echo var_dump($response);
         echo 'Success!';
     }
 
     else {
+        echo var_dump($response);
         echo 'Not Success!';
 
     }
