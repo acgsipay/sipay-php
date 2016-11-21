@@ -6,6 +6,7 @@
     $ticket         = 'sipay-php-sdk-1234';
 
     $reference      = '1234sdkphp'; # Optional
+    $transaction_id  = ''; # Opcional
 
 # -------------------------------------------------
 #   NOTIFICATION
@@ -48,7 +49,8 @@
     $action = new Sipay\Actions\Api\TokenizationsRefunds($profile);
 
     $extra = array(
-        'reference' => $reference
+        'reference'     => $reference,
+        'transaction_id' => $transaction_id
     );
 
     $response = $action->call($idrequest, $cardindex, $amount, $ticket, $extra);

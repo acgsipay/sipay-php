@@ -12,7 +12,8 @@ class TokenizationsRefunds extends Action
     public function call($idrequest, $cardindex, $amount, $ticket, array $extra = array())
     {
         $defaults = array(
-            'reference'     => ''
+            'reference'     => '',
+            'transaction_id' => ''
         );
 
         $input = array(
