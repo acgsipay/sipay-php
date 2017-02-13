@@ -12,7 +12,8 @@ class TokenizationsRefunds extends Action
     public function call($idrequest, $cardindex, $amount, $ticket, array $extra = array())
     {
         $defaults = array(
-            'reference'     => ''
+            'reference'     => '',
+            'transaction_id' => ''
         );
 
         $input = array(
@@ -32,11 +33,13 @@ class TokenizationsRefunds extends Action
         $this->request->json($params)->call();
 
         if($this->request->error == false) {
+
             $this->log->info('sipay.actions.api.tokenizations_refunds', 'api.response', 'I-00001', 'Request OK', $this->request->json);
             return $this->request->json;
         }
 
         $this->log->error('sipay.actions.api.tokenizations_refunds', 'api.response', 'E-00001', 'Request KO', $this->request->error);
+
         #TODO control errores
         return false;
     }

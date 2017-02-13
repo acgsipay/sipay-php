@@ -1,13 +1,9 @@
 <?php
-# -------------------------------------------------
-#   PARAMS
-# -------------------------------------------------
-    $amount         = '0000000010';
-    $ticket         = 'sipay-php-sdk-1234';
 
-    $transactionid  = ''; # Mandatory
-
-    $reference      = '1234sdkphp'; # Optional
+# -------------------------------------------------
+#   TOKENIZATION
+# -------------------------------------------------
+    $cardindex      = 'cardsdk';
 
 # -------------------------------------------------
 #   PROFILE
@@ -24,30 +20,31 @@
 # -------------------------------------------------
 #   AUTH
 # -------------------------------------------------
-    $auth = new Sipay\Actions\Redirect\RefundsAuth($profile);
+    $auth = new Sipay\Actions\Api\TokenizationsStoragesAuth($profile);
 
-    $extra  = array();
-
-    $idrefund = $auth->call($amount, $ticket, $extra);
+    $idstorage = $auth->call();
 
 # -------------------------------------------------
 #   CALL
 # -------------------------------------------------
-    $action = new Sipay\Actions\Redirect\RefundsById($profile);
+    $action = new Sipay\Actions\Api\TokenizationsStoragesGet($profile);
 
-    $extra = array(
-        'reference' => $reference
-    );
-
-    $response = $action->call($idrefund, $amount, $ticket, $transactionid, $extra);
+    $response = $action->call($idstorage, $cardindex);
 
     if($response['ResultCode'] == 0) {
         echo var_dump($response);
         echo 'Success!';
     }
 
+    else if ($response['ResultCode'] == '8') {
+        echo '<div><a href="'.$response['url'].'">URL</a></div>';
+    }
+
     else {
-        echo var_dump($response);
         echo 'Not Success!';
 
     }
+
+    echo '<div><pre>'.print_r($action->request->fields, true).'</pre></div>';
+
+    echo '<div><pre>'.print_r($response, true).'</pre></div>';
