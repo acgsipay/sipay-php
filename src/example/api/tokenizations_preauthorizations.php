@@ -46,7 +46,7 @@
 # -------------------------------------------------
 #   CALL
 # -------------------------------------------------
-    $action = new Sipay\Actions\Api\TokenizationsPayments($profile);
+    $action = new Sipay\Actions\Api\TokenizationsPreauthorizations($profile);
 
     $extra = array(
         # 'reference' => $reference

@@ -2,8 +2,8 @@
 # -------------------------------------------------
 #   PARAMS
 # -------------------------------------------------
-    $amount         = '0000000010';
-    $ticket         = 'sipay-php-sdk-1234';
+    $amount         = '0000000010'; # Mandatory
+    $ticket         = 'sipay-php-sdk-1234'; # Mandatory
 
     $reference      = '1234sdkphp'; # Optional
 
@@ -12,11 +12,13 @@
 # -------------------------------------------------
     $notpage        = '';
     $notmode        = 'async'; # [async|sync]
+    $notemail       = '';
+    $notemailformat = 'json'; # [nvp|json|line]
 
 # -------------------------------------------------
-#   TOKENIZATION
+#   PREAUTHORIZATIONS
 # -------------------------------------------------
-    $cardindex      = 'cardsdk';
+    $transactionid  = ''; # Mandatory
 
 # -------------------------------------------------
 #   PROFILE
@@ -33,37 +35,38 @@
 # -------------------------------------------------
 #   AUTH
 # -------------------------------------------------
-    $auth = new Sipay\Actions\Api\TokenizationsPaymentsAuth($profile);
+    $auth = new Sipay\Actions\Api\PreauthorizationsAuth($profile);
 
     $extra  = array(
-        'api.dstpage'   => $dstpage, # CES
         'api.notpage'   => $notpage,
-        'api.notmode'   => $notmode
+        'api.notmode'   => $notmode,
+
+        # 'notemail'            => $notemail,
+        # 'notemailformat'      => $notemailformat,
+
     );
 
     $idrequest = $auth->call($amount, $ticket, $extra);
 
+
 # -------------------------------------------------
 #   CALL
 # -------------------------------------------------
-    $action = new Sipay\Actions\Api\TokenizationsPayments($profile);
+    $action = new Sipay\Actions\Api\PreauthorizationsConfirm($profile);
 
     $extra = array(
-        # 'reference' => $reference
+        'reference' => $reference
     );
 
-    $response = $action->call($idrequest, $cardindex, $amount, $ticket, $extra);
+    $response = $action->call($idrequest, $amount, $ticket, $transactionid, $extra);
 
     if($response['ResultCode'] == 0) {
         echo 'Success!';
     }
 
-    else if ($response['ResultCode'] == '8') {
-        echo '<div><a href="'.$response['url'].'">URL</a></div>';
-    }
-
     else {
         echo 'Not Success!';
+
     }
 
     echo '<div><pre>'.print_r($response, true).'</pre></div>';

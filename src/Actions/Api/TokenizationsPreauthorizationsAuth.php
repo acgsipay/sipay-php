@@ -1,10 +1,10 @@
 <?php
 
-namespace Sipay\Actions\Api;
+namespace Sipay\Actions;
 
 use Sipay\Action;
 
-class TokenizationsPaymentsAuth extends Action
+class TokenizationsPreauthorizationsAuth extends Action
 {
     protected $endpoint = '/api/v1/auth';
     protected $port = 10010;
@@ -20,7 +20,7 @@ class TokenizationsPaymentsAuth extends Action
         $input = array(
             'amount'        => $amount,
             'ticket'        => $ticket,
-            'resource'      => 'tokenizations/payments'
+            'resource'      => 'tokenizations/preauthorizations'
         );
 
         $params = array_merge($defaults, $extra, $input);
@@ -28,16 +28,16 @@ class TokenizationsPaymentsAuth extends Action
 
         $params = $this->params($keys, $params);
 
-        $this->log->info('sipay.actions.api.tokenizations_payments_auth', 'api.request', 'I-00001', 'Send Request', $params);
+        $this->log->info('sipay.actions.api.tokenizations_preauthorizations_auth', 'api.request', 'I-00001', 'Send Request', $params);
 
         $this->request->json($params)->call();
 
         if($this->request->error == false) {
-            $this->log->info('sipay.actions.api.tokenizations_payments_auth', 'api.response', 'I-00001', 'Request OK', $this->request->json);
+            $this->log->info('sipay.actions.api.tokenizations_preauthorizations_auth', 'api.response', 'I-00001', 'Request OK', $this->request->json);
             return $this->request->get('idrequest');
         }
 
-        $this->log->error('sipay.actions.api.tokenizations_payments_auth', 'api.response', 'E-00001', 'Request KO', $this->request->error);
+        $this->log->error('sipay.actions.api.tokenizations_preauthorizations_auth', 'api.response', 'E-00001', 'Request KO', $this->request->error);
         #TODO control errores
         return false;
     }

@@ -36,7 +36,7 @@ class PreauthorizationsCardsAuth extends Action
         );
 
         $params = array_merge($default, $extra, $input);
-        $keys = array('apikey', 'authtype', 'lang', 'merchantid', 'currency');
+        $keys = array('apikey', 'authtype', 'lang', 'merchantid', 'merchantname', 'currency');
 
         $params = $this->params($keys, $params);
 
