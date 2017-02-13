@@ -65,7 +65,7 @@ class Profile
         $this->log = new Logger(array_merge($defaults['log'], $profile['log']));
     }
 
-    protected function url($endpoint, $port = '443')
+    public function url($endpoint, $port = '443')
     {
         return "{$this->domain}:$port$endpoint";
     }

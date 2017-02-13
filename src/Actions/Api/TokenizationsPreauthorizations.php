@@ -4,16 +4,15 @@ namespace Sipay\Actions\Api;
 
 use Sipay\Action;
 
-class TokenizationsRefunds extends Action
+class TokenizationsPreauthorizations extends Action
 {
-    protected $endpoint = '/api/v1/tokenizations/refunds';
+    protected $endpoint = '/api/v1/tokenizations/preauthorizations';
     protected $port = 443;
 
     public function call($idrequest, $cardindex, $amount, $ticket, array $extra = array())
     {
         $defaults = array(
-            'reference'     => '',
-            'transaction_id' => ''
+            'reference'     => ''
         );
 
         $input = array(
@@ -28,18 +27,16 @@ class TokenizationsRefunds extends Action
 
         $params = $this->params($keys, $params);
 
-        $this->log->info('sipay.actions.api.tokenizations_refunds', 'api.request', 'I-00001', 'Send Request', $params);
+        $this->log->info('sipay.actions.api.tokenizations_preauthorizations', 'api.request', 'I-00001', 'Send Request', $params);
 
         $this->request->json($params)->call();
 
         if($this->request->error == false) {
-
-            $this->log->info('sipay.actions.api.tokenizations_refunds', 'api.response', 'I-00001', 'Request OK', $this->request->json);
+            $this->log->info('sipay.actions.api.tokenizations_preauthorizations', 'api.response', 'I-00001', 'Request OK', $this->request->json);
             return $this->request->json;
         }
 
-        $this->log->error('sipay.actions.api.tokenizations_refunds', 'api.response', 'E-00001', 'Request KO', $this->request->error);
-
+        $this->log->error('sipay.actions.api.tokenizations_preauthorizations', 'api.response', 'E-00001', 'Request KO', $this->request->error);
         #TODO control errores
         return false;
     }

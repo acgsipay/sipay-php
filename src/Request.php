@@ -203,7 +203,7 @@ class Request implements \Serializable
         return $this;
     }
 
-    public function addHeaders(array $header)
+    public function addHeaders(array $headers)
     {
         foreach ($headers as $header => $value) {
             $this->headers[] = "$header: $value";

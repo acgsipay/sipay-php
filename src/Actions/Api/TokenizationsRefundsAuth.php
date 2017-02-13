@@ -11,32 +11,32 @@ class TokenizationsRefundsAuth extends Action
 
     public function call($amount, $ticket, array $extra = array())
     {
-        $default = array(
+        $defaults = array(
             'api.notpage'   => '',
-            'api.notmode'   => ''
+            'api.notmode'   => 'async'
         );
 
         $input = array(
-            'amount'    => $amount,
-            'ticket'    => $ticket,
-            'resource'  => 'tokenizations/refunds'
+            'amount'        => $amount,
+            'ticket'        => $ticket,
+            'resource'      => 'tokenizations/refunds'
         );
 
-        $params = array_merge($default, $extra, $input);
-        $keys = array('authtype', 'lang', 'merchantid', 'currency');
+        $params = array_merge($defaults, $extra, $input);
+        $keys = array('apikey', 'authtype', 'lang', 'merchantid', 'merchantname', 'currency');
 
         $params = $this->params($keys, $params);
 
-        $this->log->info('sipay.actions.api.refunds_auth', 'api.request', 'I-00001', 'Send Request', $params);
+        $this->log->info('sipay.actions.api.tokenizations_refunds_auth', 'api.request', 'I-00001', 'Send Request', $params);
 
         $this->request->json($params)->call();
 
         if($this->request->error == false) {
-            $this->log->info('sipay.actions.api.refunds_auth', 'api.response', 'I-00001', 'Request OK', $this->request->json);
+            $this->log->info('sipay.actions.api.tokenizations_refunds_auth', 'api.response', 'I-00001', 'Request OK', $this->request->json);
             return $this->request->get('idrefund');
         }
 
-        $this->log->error('sipay.actions.api.refunds_auth', 'api.response', 'E-00001', 'Request KO', $this->request->error);
+        $this->log->error('sipay.actions.api.tokenizations_refunds_auth', 'api.response', 'E-00001', 'Request KO', $this->request->error);
         #TODO control errores
         return false;
     }
