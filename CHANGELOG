@@ -1,3 +1,15 @@
+RC2.6 - Started: 06-04-2017 / Finished: 06-04-2017
+--------------------------------------------------
+    NEW:
+        - Example: api/tokenizations_storages_get.php, ejemplo de obtención de tarjetas tokenizadas.
+        - Example: api/tokenizations_storages_delete.php, ejemplo para dar de baja tarjetas tokenizadas.
+
+    FIXES:
+
+    BUGS:
+
+    TODO:
+
 RC2.5 - Started: 14-06-2016 / Finished: 23-06-2016
 --------------------------------------------------
     NEW:
