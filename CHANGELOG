@@ -30,6 +30,8 @@ RC2.5 - Started: 14-06-2016 / Finished: 23-06-2016
         - Example: api/preauthorizations_confirm.php, ejemplo de confirmación de peautorización.
         - Example: api/tokenizations_preauthorizations.php, ejemplo de peautorización con tarjeta tokenizada.
         - Example: api/tokenizations_storages_webviews.php, ejemplo de obtención de webview para tokenizar tarjetas.
+        - Example: api/tokenizations_refunds, ejemplo de devolución con tarjeta tokenizada
+        - Example: api/tokenizations_storages_get, ejemplo de obtención de datos de una tarjeta tokenizada
 
 
     FIXES:

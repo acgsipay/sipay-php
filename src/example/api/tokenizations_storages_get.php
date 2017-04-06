@@ -7,6 +7,7 @@
 #   TOKENIZATION
 # -------------------------------------------------
     $cardindex      = 'cardsdk'; # Mandatory
+    $cardindex      = 'cardsdk';
 
 # -------------------------------------------------
 #   PROFILE
@@ -29,6 +30,7 @@
 
     $idrequest = $auth->call($extra);
 
+    $idstorage = $auth->call();
 
 # -------------------------------------------------
 #   CALL
